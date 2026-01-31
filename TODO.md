@@ -60,16 +60,16 @@
 
 ### 4.1 テーマ・レイアウト
 
-- [ ] `src/lib/theme.ts` - MUI ダークテーマ設定
-- [ ] `src/app/layout.tsx` - ThemeProvider 設定
-- [ ] `src/app/page.tsx` - メインページレイアウト
+- [x] `src/lib/theme.ts` - MUI ダークテーマ設定
+- [x] `src/app/layout.tsx` - ThemeProvider 設定
+- [x] `src/app/page.tsx` - メインページレイアウト
 
 ### 4.2 共通コンポーネント
 
-- [ ] `src/components/common/` - 共通 UI コンポーネント
-  - [ ] Header
-  - [ ] Sidebar (会話履歴リスト用)
-  - [ ] LoadingSpinner
+- [x] `src/components/common/` - 共通 UI コンポーネント
+  - [x] Header
+  - [x] Sidebar (会話履歴リスト用)
+  - [x] LoadingSpinner
 
 ## Phase 5: チャット機能実装
 
