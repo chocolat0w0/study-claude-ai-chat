@@ -75,29 +75,29 @@
 
 ### 5.1 チャット UI コンポーネント
 
-- [ ] `src/components/chat/ChatInput.tsx` - メッセージ入力フォーム
-  - [ ] テキストエリア
-  - [ ] 送信ボタン
-  - [ ] キーボードショートカット (Cmd/Ctrl + Enter)
-- [ ] `src/components/chat/ChatMessage.tsx` - メッセージ表示
-  - [ ] ユーザー / アシスタント メッセージの区別
-  - [ ] アバター表示
-  - [ ] タイムスタンプ
-- [ ] `src/components/chat/ChatHistory.tsx` - 会話履歴サイドバー
-  - [ ] 会話リスト表示
-  - [ ] 新規チャット作成ボタン
-  - [ ] 会話削除機能
+- [x] `src/components/chat/ChatInput.tsx` - メッセージ入力フォーム
+  - [x] テキストエリア
+  - [x] 送信ボタン
+  - [x] キーボードショートカット (Cmd/Ctrl + Enter)
+- [x] `src/components/chat/ChatMessage.tsx` - メッセージ表示
+  - [x] ユーザー / アシスタント メッセージの区別
+  - [x] アバター表示
+  - [x] タイムスタンプ
+- [x] `src/components/common/Sidebar.tsx` - 会話履歴サイドバー（ChatHistory相当）
+  - [x] 会話リスト表示
+  - [x] 新規チャット作成ボタン
+  - [x] 会話削除機能
 
 ### 5.2 チャット機能ロジック
 
-- [ ] `src/hooks/useChat.ts` - チャットカスタムフック
-  - [ ] メッセージ送信
-  - [ ] ストリーミング受信処理
-  - [ ] エラーハンドリング
-- [ ] `src/hooks/useConversations.ts` - 会話管理フック
-  - [ ] 会話一覧取得
-  - [ ] 会話切り替え
-  - [ ] 会話削除
+- [x] `src/hooks/useChat.ts` - チャットカスタムフック
+  - [x] メッセージ送信
+  - [x] ストリーミング受信処理
+  - [x] エラーハンドリング
+- [x] `src/hooks/useConversations.ts` - 会話管理フック
+  - [x] 会話一覧取得
+  - [x] 会話切り替え
+  - [x] 会話削除
 
 ## Phase 6: コード表示機能実装
 

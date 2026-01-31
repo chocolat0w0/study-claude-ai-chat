@@ -16,14 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { SIDEBAR_WIDTH, HEADER_HEIGHT } from '@/lib/theme';
-
-export interface Conversation {
-  id: string;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-  messageCount: number;
-}
+import type { Conversation } from '@/types/chat';
 
 interface SidebarProps {
   open: boolean;
