@@ -2,22 +2,22 @@
 
 ## Phase 1: プロジェクト初期設定
 
-- [ ] Next.js プロジェクト作成 (`create-next-app`)
-- [ ] 必要なパッケージのインストール
-  - [ ] MUI (`@mui/material`, `@emotion/react`, `@emotion/styled`)
-  - [ ] Hono (`hono`, `@hono/node-server`)
-  - [ ] Prisma (`prisma`, `@prisma/client`)
-  - [ ] Mastra (`@mastra/core`)
-  - [ ] Anthropic SDK (`@anthropic-ai/sdk`)
-  - [ ] Markdown関連 (`react-markdown`, `remark-gfm`)
-  - [ ] コードハイライト (`prism-react-renderer` or `highlight.js`)
-  - [ ] 差分表示 (`react-diff-viewer-continued`)
-- [ ] TypeScript 設定 (strict mode)
-- [ ] ESLint + Prettier 設定
-- [ ] Vitest + React Testing Library 設定
-- [ ] ディレクトリ構成の作成
-- [ ] 環境変数ファイル作成 (`.env.local`, `.env.example`)
-- [ ] Git リポジトリ初期化 + `.gitignore` 設定
+- [x] Next.js プロジェクト作成 (`create-next-app`)
+- [x] 必要なパッケージのインストール
+  - [x] MUI (`@mui/material`, `@emotion/react`, `@emotion/styled`)
+  - [x] Hono (`hono`, `@hono/node-server`)
+  - [x] Prisma (`prisma`, `@prisma/client`)
+  - [x] Mastra (`@mastra/core`)
+  - [x] Anthropic SDK (`@anthropic-ai/sdk`)
+  - [x] Markdown関連 (`react-markdown`, `remark-gfm`)
+  - [x] コードハイライト (`prism-react-renderer` or `highlight.js`)
+  - [x] 差分表示 (`react-diff-viewer-continued`)
+- [x] TypeScript 設定 (strict mode)
+- [x] ESLint + Prettier 設定
+- [x] Vitest + React Testing Library 設定
+- [x] ディレクトリ構成の作成
+- [x] 環境変数ファイル作成 (`.env.local`, `.env.example`)
+- [x] Git リポジトリ初期化 + `.gitignore` 設定
 
 ## Phase 2: データベース設定 (Prisma + MongoDB)
 
