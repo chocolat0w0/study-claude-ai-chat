@@ -34,27 +34,27 @@
 
 ### 3.1 Hono セットアップ
 
-- [ ] `src/server/hono.ts` - Hono アプリ初期化
-- [ ] `src/app/api/[[...route]]/route.ts` - Next.js との統合
-- [ ] エラーハンドリングミドルウェア
-- [ ] CORS 設定
+- [x] `src/server/hono.ts` - Hono アプリ初期化
+- [x] `src/app/api/[[...route]]/route.ts` - Next.js との統合
+- [x] エラーハンドリングミドルウェア
+- [x] CORS 設定
 
 ### 3.2 Mastra AIエージェント設定
 
-- [ ] `src/mastra/index.ts` - Mastra 初期化
-- [ ] `src/mastra/agents/codeAssistant.ts` - コーディング支援エージェント定義
-  - [ ] システムプロンプト設定
-  - [ ] Claude-3-sonnet モデル設定
-- [ ] ストリーミングレスポンス対応
+- [x] `src/mastra/index.ts` - Mastra 初期化
+- [x] `src/mastra/agents/codeAssistant.ts` - コーディング支援エージェント定義
+  - [x] システムプロンプト設定
+  - [x] Claude-3-sonnet モデル設定
+- [x] ストリーミングレスポンス対応
 
 ### 3.3 API ルート実装
 
-- [ ] `src/server/routes/chat.ts` - チャット API
-  - [ ] `POST /api/chat` - メッセージ送信 (ストリーミング)
-  - [ ] `GET /api/chat/history` - 会話履歴一覧取得
-  - [ ] `GET /api/chat/:conversationId` - 会話詳細取得
-  - [ ] `DELETE /api/chat/:conversationId` - 会話削除
-- [ ] `src/server/routes/index.ts` - ルート集約
+- [x] `src/server/routes/chat.ts` - チャット API
+  - [x] `POST /api/chat` - メッセージ送信 (ストリーミング)
+  - [x] `GET /api/chat/history` - 会話履歴一覧取得
+  - [x] `GET /api/chat/:conversationId` - 会話詳細取得
+  - [x] `DELETE /api/chat/:conversationId` - 会話削除
+- [x] `src/server/routes/index.ts` - ルート集約
 
 ## Phase 4: フロントエンド基盤構築
 
