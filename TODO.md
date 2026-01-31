@@ -21,14 +21,14 @@
 
 ## Phase 2: データベース設定 (Prisma + MongoDB)
 
-- [ ] Prisma 初期化 (`npx prisma init`)
-- [ ] MongoDB Atlas クラスター作成（または Docker でローカル環境）
-- [ ] `schema.prisma` でデータモデル定義
-  - [ ] Conversation モデル
-  - [ ] Message モデル
-- [ ] Prisma Client 生成 (`npx prisma generate`)
-- [ ] `src/lib/prisma.ts` - Prisma クライアントシングルトン作成
-- [ ] データベース接続テスト
+- [x] Prisma 初期化 (`npx prisma init`)
+- [x] MongoDB Atlas クラスター作成（または Docker でローカル環境）
+- [x] `schema.prisma` でデータモデル定義
+  - [x] Conversation モデル
+  - [x] Message モデル
+- [x] Prisma Client 生成 (`npx prisma generate`)
+- [x] `src/lib/prisma.ts` - Prisma クライアントシングルトン作成
+- [x] データベース接続テスト
 
 ## Phase 3: バックエンド構築 (Hono + Mastra)
 
