@@ -122,21 +122,21 @@
 
 ### 8.1 ユニットテスト
 
-- [ ] `src/__tests__/lib/prisma.test.ts`
-- [ ] `src/__tests__/hooks/useChat.test.ts`
-- [ ] `src/__tests__/hooks/useConversations.test.ts`
+- [x] `src/__tests__/lib/prisma.test.ts`
+- [x] `src/__tests__/hooks/useChat.test.ts`
+- [x] `src/__tests__/hooks/useConversations.test.ts`
 
 ### 8.2 コンポーネントテスト
 
-- [ ] `src/__tests__/components/ChatInput.test.tsx`
-- [ ] `src/__tests__/components/ChatMessage.test.tsx`
+- [x] `src/__tests__/components/ChatInput.test.tsx`
+- [x] `src/__tests__/components/ChatMessage.test.tsx`
 - [ ] `src/__tests__/components/CodeBlock.test.tsx`
 - [ ] `src/__tests__/components/CopyButton.test.tsx`
 - [ ] `src/__tests__/components/MarkdownRenderer.test.tsx`
 
 ### 8.3 API テスト
 
-- [ ] `src/__tests__/server/routes/chat.test.ts`
+- [x] `src/__tests__/server/routes/chat.test.ts`
 
 ## Phase 9: 品質向上・最適化
 
