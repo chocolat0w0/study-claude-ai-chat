@@ -112,11 +112,11 @@
 
 ## Phase 7: Markdown レンダリング
 
-- [ ] `src/components/chat/MarkdownRenderer.tsx` - Markdown 表示コンポーネント
-  - [ ] 見出し、リスト、テーブル対応
-  - [ ] コードブロックに `CodeBlock` コンポーネント使用
-  - [ ] リンク処理
-  - [ ] MUI テーマとの統合
+- [x] `src/components/chat/ChatMessage.tsx` - Markdown 表示機能
+  - [x] 見出し、リスト、テーブル対応（react-markdown + remark-gfm）
+  - [x] コードブロックに `CodeBlock` コンポーネント使用
+  - [x] リンク処理（react-markdownがデフォルトでサポート）
+  - [x] MUI テーマとの統合（カスタムスタイリング）
 
 ## Phase 8: テスト実装
 
@@ -132,7 +132,7 @@
 - [x] `src/__tests__/components/ChatMessage.test.tsx`
 - [x] `src/__tests__/components/CodeBlock.test.tsx`
 - [x] `src/__tests__/components/CopyButton.test.tsx`
-- [ ] `src/__tests__/components/MarkdownRenderer.test.tsx`
+- [x] `src/__tests__/components/MarkdownRenderer.test.tsx` (ChatMessage.test.tsxに統合)
 
 ### 8.3 API テスト
 

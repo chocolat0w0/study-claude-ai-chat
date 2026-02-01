@@ -80,14 +80,50 @@ export function ChatMessage({ message }: ChatMessageProps) {
               fontSize: '0.875em',
               fontFamily: 'monospace',
             },
+            '& a': {
+              color: '#58a6ff',
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            },
+            '& table': {
+              borderCollapse: 'collapse',
+              width: '100%',
+              marginTop: 1,
+              marginBottom: 2,
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+            },
+            '& th, & td': {
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '8px 12px',
+              textAlign: 'left',
+            },
+            '& th': {
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              fontWeight: 600,
+            },
+            '& tr:nth-of-type(even)': {
+              backgroundColor: 'rgba(255, 255, 255, 0.02)',
+            },
+            '& blockquote': {
+              margin: '16px 0',
+              padding: '8px 16px',
+              borderLeft: '4px solid rgba(255, 255, 255, 0.3)',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              '& p': {
+                margin: 0,
+              },
+            },
           }}
         >
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              code({ node, inline, className, children, ...props }) {
+              code({ className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '');
                 const codeString = String(children).replace(/\n$/, '');
+                const inline = !className;
 
                 return !inline && match ? (
                   <CodeBlock code={codeString} language={match[1]} showLineNumbers />
