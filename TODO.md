@@ -151,14 +151,14 @@
 
 ## Phase 10: デプロイ準備
 
-- [ ] `Dockerfile` 作成
-- [ ] `docker-compose.yml` 作成（ローカル開発用）
-- [ ] Google Cloud Run 設定
-  - [ ] Cloud Run サービス作成
-  - [ ] 環境変数設定
-  - [ ] デプロイパイプライン構築
+- [x] `Dockerfile` 作成
+- [x] `docker-compose.yml` 作成（ローカル開発用）
+- [x] Google Cloud Run 設定
+  - [x] Cloud Run サービス作成
+  - [x] 環境変数設定
+  - [x] デプロイパイプライン構築
 - [ ] 本番環境テスト
-- [ ] ドキュメント整備
+- [x] ドキュメント整備
 
 ---
 

@@ -3,11 +3,15 @@
 # デフォルトターゲット
 .DEFAULT_GOAL := help
 
-# 環境変数
+# 環境変数（.env.localから読み込み）
+-include .env.local
+export
+
 NODE_ENV ?= development
 PROJECT_ID ?= your-gcp-project-id
-SERVICE_NAME ?= ai-code-assistant
+SERVICE_NAME ?= study-claude-ai-chat
 REGION ?= asia-northeast1
+REGISTRY ?= asia-northeast1-docker.pkg.dev/$(PROJECT_ID)/$(SERVICE_NAME)
 
 ## help: このヘルプメッセージを表示
 help:
@@ -209,15 +213,21 @@ docker-clean:
 ## deploy-build: デプロイ用イメージをビルド
 deploy-build:
 	@echo "🏗️  デプロイ用イメージをビルド中..."
-	gcloud builds submit --tag gcr.io/$(PROJECT_ID)/$(SERVICE_NAME)
+	gcloud builds submit --tag $(REGISTRY)/app:latest
 
 ## deploy: Google Cloud Runにデプロイ
 deploy: deploy-build
 	@echo "🚀 Google Cloud Runにデプロイ中..."
 	gcloud run deploy $(SERVICE_NAME) \
-		--image gcr.io/$(PROJECT_ID)/$(SERVICE_NAME) \
+		--image $(REGISTRY)/app:latest \
 		--platform managed \
 		--region $(REGION) \
 		--allow-unauthenticated \
-		--set-env-vars NODE_ENV=production
+		--memory 512Mi \
+		--cpu 1 \
+		--min-instances 0 \
+		--max-instances 1 \
+		--timeout 300 \
+		--set-env-vars NODE_ENV=production \
+		--set-secrets DATABASE_URL=DATABASE_URL:latest,ANTHROPIC_API_KEY=ANTHROPIC_API_KEY:latest
 	@echo "✅ デプロイ完了"
