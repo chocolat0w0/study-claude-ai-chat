@@ -101,14 +101,14 @@
 
 ## Phase 6: コード表示機能実装
 
-- [ ] `src/components/code/CodeBlock.tsx` - コードブロック表示
-  - [ ] シンタックスハイライト
-  - [ ] 言語ラベル表示
-- [ ] `src/components/code/CopyButton.tsx` - コピーボタン
-  - [ ] クリップボードへのコピー
-  - [ ] コピー完了フィードバック
-- [ ] `src/components/code/DiffViewer.tsx` - 差分表示
-  - [ ] 変更前後のコード比較表示
+- [x] `src/components/code/CodeBlock.tsx` - コードブロック表示
+  - [x] シンタックスハイライト
+  - [x] 言語ラベル表示
+- [x] `src/components/code/CopyButton.tsx` - コピーボタン
+  - [x] クリップボードへのコピー
+  - [x] コピー完了フィードバック
+- [x] `src/components/code/DiffViewer.tsx` - 差分表示
+  - [x] 変更前後のコード比較表示
 
 ## Phase 7: Markdown レンダリング
 
@@ -130,8 +130,8 @@
 
 - [x] `src/__tests__/components/ChatInput.test.tsx`
 - [x] `src/__tests__/components/ChatMessage.test.tsx`
-- [ ] `src/__tests__/components/CodeBlock.test.tsx`
-- [ ] `src/__tests__/components/CopyButton.test.tsx`
+- [x] `src/__tests__/components/CodeBlock.test.tsx`
+- [x] `src/__tests__/components/CopyButton.test.tsx`
 - [ ] `src/__tests__/components/MarkdownRenderer.test.tsx`
 
 ### 8.3 API テスト

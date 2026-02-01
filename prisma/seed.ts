@@ -5,10 +5,10 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // サンプル会話を作成
-  const conversation = await prisma.conversation.create({
+  // サンプル会話1: TypeScriptの基本
+  const conversation1 = await prisma.conversation.create({
     data: {
-      title: 'サンプル会話',
+      title: 'TypeScriptの基本',
       messages: {
         create: [
           {
@@ -28,8 +28,93 @@ async function main() {
     },
   });
 
-  console.log('✅ Created sample conversation:', conversation.id);
-  console.log('   Messages:', conversation.messages.length);
+  // サンプル会話2: Fibonacci関数の実装
+  const conversation2 = await prisma.conversation.create({
+    data: {
+      title: 'Fibonacci関数の実装',
+      messages: {
+        create: [
+          {
+            role: 'user',
+            content: 'TypeScriptでフィボナッチ数列を計算する関数を書いてください。',
+          },
+          {
+            role: 'assistant',
+            content: `TypeScriptでフィボナッチ数列を計算する関数を実装します。再帰的なアプローチで書いてみましょう。
+
+\`\`\`typescript
+function fibonacci(n: number): number {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// 使用例
+console.log(fibonacci(10)); // 55
+\`\`\`
+
+この関数は、以下のように動作します：
+- n が 0 または 1 の場合、n をそのまま返します
+- それ以外の場合、fibonacci(n-1) + fibonacci(n-2) を再帰的に計算します
+
+フィボナッチ数列は、前の2つの数を足すことで次の数を得る数列です（0, 1, 1, 2, 3, 5, 8, 13...）。`,
+          },
+        ],
+      },
+    },
+    include: {
+      messages: true,
+    },
+  });
+
+  // サンプル会話3: JavaScriptからTypeScriptへの変換
+  const conversation3 = await prisma.conversation.create({
+    data: {
+      title: 'JavaScriptからTypeScriptへ',
+      messages: {
+        create: [
+          {
+            role: 'user',
+            content: 'JavaScriptのコードをTypeScriptに変換する際のポイントを教えてください。',
+          },
+          {
+            role: 'assistant',
+            content: `JavaScriptからTypeScriptへの変換のポイントを、具体例で説明します。
+
+以下は、JavaScriptからTypeScriptへの変換例です：
+
+**変換前（JavaScript）:**
+\`\`\`javascript
+function greet(name) {
+  console.log("Hello, " + name);
+}
+\`\`\`
+
+**変換後（TypeScript）:**
+\`\`\`typescript
+function greet(name: string): void {
+  console.log(\`Hello, \${name}!\`);
+}
+\`\`\`
+
+主な変更点：
+1. **型アノテーション**: パラメータに \`string\` 型を追加
+2. **戻り値の型**: \`void\` を明示的に指定
+3. **テンプレートリテラル**: 文字列連結の代わりにテンプレートリテラルを使用
+
+これにより、型安全性が向上し、開発時にエラーを早期に発見できます。`,
+          },
+        ],
+      },
+    },
+    include: {
+      messages: true,
+    },
+  });
+
+  console.log('✅ Created sample conversations:');
+  console.log('   1. TypeScriptの基本:', conversation1.id, `(${conversation1.messages.length} messages)`);
+  console.log('   2. Fibonacci関数の実装:', conversation2.id, `(${conversation2.messages.length} messages)`);
+  console.log('   3. JavaScriptからTypeScriptへ:', conversation3.id, `(${conversation3.messages.length} messages)`);
 }
 
 main()

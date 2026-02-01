@@ -111,10 +111,7 @@ export default function Home() {
           <Box
             sx={{
               flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
+              overflow: 'auto',
               p: 3,
             }}
           >
@@ -123,6 +120,9 @@ export default function Home() {
             </Typography>
             <Typography variant="body2" color="text.secondary">
               メッセージを入力して、コーディングの質問をしてください
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              左側のサイドバーから過去の会話を選択することもできます
             </Typography>
           </Box>
         ) : (

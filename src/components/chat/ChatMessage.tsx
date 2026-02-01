@@ -3,6 +3,9 @@
 import { Box, Avatar, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { CodeBlock } from '@/components/code';
 import type { Message } from '@/types/chat';
 
 interface ChatMessageProps {
@@ -48,15 +51,57 @@ export function ChatMessage({ message }: ChatMessageProps) {
             {formatTime(message.createdAt)}
           </Typography>
         </Box>
-        <Typography
-          variant="body1"
+        <Box
           sx={{
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-word',
+            '& p': {
+              margin: 0,
+              marginBottom: 1,
+              '&:last-child': {
+                marginBottom: 0,
+              },
+            },
+            '& ul, & ol': {
+              marginTop: 0.5,
+              marginBottom: 1,
+              paddingLeft: 3,
+            },
+            '& li': {
+              marginBottom: 0.5,
+            },
+            '& h1, & h2, & h3, & h4, & h5, & h6': {
+              marginTop: 2,
+              marginBottom: 1,
+              fontWeight: 600,
+            },
+            '& code:not(pre code)': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              padding: '2px 6px',
+              borderRadius: '4px',
+              fontSize: '0.875em',
+              fontFamily: 'monospace',
+            },
           }}
         >
-          {message.content}
-        </Typography>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || '');
+                const codeString = String(children).replace(/\n$/, '');
+
+                return !inline && match ? (
+                  <CodeBlock code={codeString} language={match[1]} showLineNumbers />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
+        </Box>
       </Box>
     </Box>
   );
