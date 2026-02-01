@@ -33,5 +33,5 @@ export const codeAssistantAgent = new Agent({
   id: 'code-assistant',
   name: 'Code Assistant',
   instructions: SYSTEM_PROMPT,
-  model: 'anthropic/claude-3-sonnet-20240229',
+  model: 'anthropic/claude-haiku-4-5-20251001',
 });
