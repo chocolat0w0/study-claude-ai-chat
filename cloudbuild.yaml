@@ -5,18 +5,18 @@ steps:
       [
         'build',
         '-t',
-        'gcr.io/$PROJECT_ID/ai-code-assistant:$COMMIT_SHA',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:$COMMIT_SHA',
         '-t',
-        'gcr.io/$PROJECT_ID/ai-code-assistant:latest',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:latest',
         '.',
       ]
 
-  # Docker イメージを Container Registry にプッシュ
+  # Docker イメージを Artifact Registry にプッシュ
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/ai-code-assistant:$COMMIT_SHA']
+    args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:$COMMIT_SHA']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/ai-code-assistant:latest']
+    args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:latest']
 
   # Cloud Run にデプロイ
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -24,9 +24,9 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'ai-code-assistant'
+      - 'study-claude-ai-chat'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/ai-code-assistant:$COMMIT_SHA'
+      - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:$COMMIT_SHA'
       - '--region'
       - 'asia-northeast1'
       - '--platform'
@@ -48,8 +48,8 @@ steps:
       - 'DATABASE_URL=DATABASE_URL:latest,ANTHROPIC_API_KEY=ANTHROPIC_API_KEY:latest'
 
 images:
-  - 'gcr.io/$PROJECT_ID/ai-code-assistant:$COMMIT_SHA'
-  - 'gcr.io/$PROJECT_ID/ai-code-assistant:latest'
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:$COMMIT_SHA'
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/study-claude-ai-chat/app:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
