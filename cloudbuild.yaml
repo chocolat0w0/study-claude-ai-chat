@@ -31,7 +31,7 @@ steps:
       - 'asia-northeast1'
       - '--platform'
       - 'managed'
-      - '--allow-unauthenticated'
+      - '--no-allow-unauthenticated'
       - '--memory'
       - '512Mi'
       - '--cpu'

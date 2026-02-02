@@ -65,7 +65,7 @@ npm run db:seed
 npm run dev
 ```
 
-http://localhost:3000 でアクセス可能。
+<http://localhost:3000> でアクセス可能。
 
 ## npm スクリプト
 
@@ -84,6 +84,23 @@ http://localhost:3000 でアクセス可能。
 | `npm run db:seed`     | シードデータ投入       |
 | `npm run db:studio`   | Prisma Studio起動      |
 | `npm run db:test`     | DB接続テスト           |
+
+## デプロイ (Google Cloud Run)
+
+### デプロイ実行
+
+```bash
+make deploy
+```
+
+### デプロイ後のアクセス
+
+Cloud Run は IAM 認証で保護されているため、プロキシ経由でアクセスします。
+
+```bash
+# プロキシ起動 → http://localhost:8080 でアクセス
+make proxy
+```
 
 ## ディレクトリ構成
 

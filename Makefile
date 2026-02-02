@@ -1,4 +1,4 @@
-.PHONY: help install setup clean dev build start test test-watch test-coverage lint lint-fix format type-check db-generate db-push db-seed db-studio db-test docker-build docker-up docker-down docker-clean deploy deploy-build
+.PHONY: help install setup clean dev build start test test-watch test-coverage lint lint-fix format type-check db-generate db-push db-seed db-studio db-test docker-build docker-up docker-down docker-clean deploy deploy-build proxy
 
 # デフォルトターゲット
 .DEFAULT_GOAL := help
@@ -57,6 +57,7 @@ help:
 	@echo "【デプロイ】"
 	@echo "  make deploy           - Google Cloud Runにデプロイ"
 	@echo "  make deploy-build     - デプロイ用イメージをビルド"
+	@echo "  make proxy            - Cloud Runにプロキシ経由でアクセス"
 	@echo ""
 
 # ===================================
@@ -222,7 +223,7 @@ deploy: deploy-build
 		--image $(REGISTRY)/app:latest \
 		--platform managed \
 		--region $(REGION) \
-		--allow-unauthenticated \
+		--no-allow-unauthenticated \
 		--memory 512Mi \
 		--cpu 1 \
 		--min-instances 0 \
@@ -231,3 +232,9 @@ deploy: deploy-build
 		--set-env-vars NODE_ENV=production \
 		--set-secrets DATABASE_URL=DATABASE_URL:latest,ANTHROPIC_API_KEY=ANTHROPIC_API_KEY:latest
 	@echo "✅ デプロイ完了"
+	@echo "💡 アクセスするには: make proxy"
+
+## proxy: Cloud Runサービスにプロキシ経由でアクセス
+proxy:
+	@echo "🔗 プロキシを起動中... (http://localhost:8080)"
+	gcloud run services proxy $(SERVICE_NAME) --region=$(REGION)

@@ -56,7 +56,8 @@ Claude APIを活用し、プログラミングに関する質問応答、コー�
 
 ### 4. 認証
 
-- 認証機能なし（オープンアクセス）
+- アプリレベルの認証機能なし
+- Cloud Run の IAM 認証で保護（プロキシ経由でアクセス）
 
 ## ディレクトリ構成
 
@@ -223,6 +224,31 @@ npm run lint
 
 # 型チェック
 npm run type-check
+```
+
+## デプロイ
+
+### Cloud Run へのデプロイ
+
+```bash
+# デプロイ（ビルド + デプロイ）
+make deploy
+
+# ビルドのみ
+make deploy-build
+```
+
+### デプロイ後のアクセス
+
+Cloud Run サービスは認証が必要な設定（`--no-allow-unauthenticated`）のため、直接 URL にアクセスできません。
+以下のコマンドでプロキシ経由でアクセスしてください。
+
+```bash
+# プロキシを起動（http://localhost:8080 でアクセス可能）
+make proxy
+
+# または直接 gcloud コマンド
+gcloud run services proxy study-claude-ai-chat --region=asia-northeast1
 ```
 
 ## 非機能要件
