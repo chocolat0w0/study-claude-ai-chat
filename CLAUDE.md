@@ -251,6 +251,18 @@ make proxy
 gcloud run services proxy study-claude-ai-chat --region=asia-northeast1
 ```
 
+### MongoDB Atlas ネットワークアクセスについて
+
+MongoDB Atlas の Network Access で `0.0.0.0/0`（全IP許可）を設定した場合、セキュリティ上の理由から**時間制限付き**で設定される。
+デプロイ後に動作確認やデバッグを行う際、接続エラーが発生した場合は以下を確認すること。
+
+1. [MongoDB Atlas](https://cloud.mongodb.com/) にログイン
+2. 左メニュー「Network Access」を開く
+3. `0.0.0.0/0` のエントリが期限切れになっていないか確認
+4. 期限切れの場合は「Edit」から再度有効化する（または新しい時間制限を設定）
+
+> **注意**: Cloud Run は動的IPのため `0.0.0.0/0` の許可が必要だが、不要時は無効化しておくことを推奨。
+
 ## 非機能要件
 
 ### パフォーマンス

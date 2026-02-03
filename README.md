@@ -102,6 +102,14 @@ Cloud Run は IAM 認証で保護されているため、プロキシ経由で�
 make proxy
 ```
 
+### MongoDB Atlas ネットワークアクセスの確認
+
+MongoDB Atlas の Network Access で `0.0.0.0/0`（全IP許可）を設定している場合、**時間制限付き**で設定されます。
+デプロイ後に接続エラーが発生した場合は、Atlas の Network Access で期限切れになっていないか確認してください。
+
+1. [MongoDB Atlas](https://cloud.mongodb.com/) → Network Access を開く
+2. `0.0.0.0/0` の期限が切れていれば「Edit」から再有効化する
+
 ## ディレクトリ構成
 
 ```
