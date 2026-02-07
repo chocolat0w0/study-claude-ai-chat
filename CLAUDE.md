@@ -280,3 +280,70 @@ MongoDB Atlas の Network Access で `0.0.0.0/0`（全IP許可）を設定した
 - API キーはサーバーサイドでのみ使用
 - 入力値のサニタイズ
 - Rate limiting の実装
+
+## CI/CD (GitHub Actions)
+
+### ワークフロー
+
+- **CI** (`.github/workflows/ci.yml`): PR時にlint、type-check、testを実行
+- **Deploy** (`.github/workflows/deploy.yml`): mainへのpush時にCloud Runへ自動デプロイ
+
+### GitHub Actions セットアップ手順
+
+#### 1. サービスアカウントを作成
+
+```bash
+# サービスアカウントを作成
+gcloud iam service-accounts create github-actions \
+  --display-name="GitHub Actions"
+
+# 必要な権限を付与
+PROJECT_ID=$(gcloud config get-value project)
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/run.admin"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/storage.admin"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/iam.serviceAccountUser"
+```
+
+各ロールの説明:
+
+| ロール                          | 用途                                               |
+| ------------------------------- | -------------------------------------------------- |
+| `roles/run.admin`               | Cloud Runサービスの作成・更新・削除                |
+| `roles/storage.admin`           | Cloud Buildがビルド成果物を保存                    |
+| `roles/artifactregistry.writer` | Dockerイメージのpush                               |
+| `roles/iam.serviceAccountUser`  | Cloud Runがデフォルトのサービスアカウントで動作    |
+
+#### 2. サービスアカウントキーを生成
+
+```bash
+gcloud iam service-accounts keys create key.json \
+  --iam-account=github-actions@$(gcloud config get-value project).iam.gserviceaccount.com
+
+cat key.json
+```
+
+#### 3. GitHub Secretsを設定
+
+リポジトリの Settings > Secrets and variables > Actions で以下を設定:
+
+- `GCP_PROJECT_ID`: GCPプロジェクトID
+- `GCP_CREDENTIALS`: 生成したkey.jsonの中身（JSON全体）
+
+設定後、ローカルのkey.jsonは削除すること。
+
+#### 4. 手動デプロイ
+
+GitHub ActionsのActionsタブから「Deploy to Cloud Run」ワークフローを選択し、「Run workflow」ボタンで手動実行も可能。
