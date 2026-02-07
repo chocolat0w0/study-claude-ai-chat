@@ -180,7 +180,7 @@ docker-compose down -v
 
 ```bash
 # DATABASE_URL を設定
-echo -n "mongodb+srv://username:password@cluster.mongodb.net/ai_code_assistant" | \
+echo -n "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ai_code_assistant" | \
   gcloud secrets create DATABASE_URL --data-file=-
 
 # ANTHROPIC_API_KEY を設定
