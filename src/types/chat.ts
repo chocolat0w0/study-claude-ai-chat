@@ -1,7 +1,15 @@
+export interface MessageImage {
+  id: string;
+  data: string; // Base64 encoded
+  mimeType: string;
+  createdAt: string;
+}
+
 export interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  images?: MessageImage[];
   createdAt: string;
 }
 

@@ -71,8 +71,8 @@ export default function Home() {
   );
 
   const handleSendMessage = useCallback(
-    async (content: string) => {
-      await sendMessage(content);
+    async (content: string, images?: { data: string; mimeType: string }[]) => {
+      await sendMessage(content, images);
       fetchConversations();
     },
     [sendMessage, fetchConversations]

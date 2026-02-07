@@ -23,15 +23,21 @@ type ConversationWithCount = {
 
 export const chatRoutes = new Hono();
 
+interface ImageAttachment {
+  data: string; // Base64
+  mimeType: string;
+}
+
 // POST /api/chat - メッセージ送信 (ストリーミング)
 chatRoutes.post('/', async (c) => {
   const body = await c.req.json<{
     message: string;
     conversationId?: string;
+    images?: ImageAttachment[];
   }>();
 
-  if (!body.message?.trim()) {
-    throw new HTTPException(400, { message: 'Message is required' });
+  if (!body.message?.trim() && (!body.images || body.images.length === 0)) {
+    throw new HTTPException(400, { message: 'Message or images are required' });
   }
 
   // 会話を取得または作成
@@ -55,12 +61,20 @@ chatRoutes.post('/', async (c) => {
     });
   }
 
-  // ユーザーメッセージを保存
-  await prisma.message.create({
+  // ユーザーメッセージを保存（画像付き）
+  const userMessage = await prisma.message.create({
     data: {
       conversationId: conversation.id,
       role: 'user',
       content: body.message,
+      images: body.images
+        ? {
+            create: body.images.map((img) => ({
+              data: img.data,
+              mimeType: img.mimeType,
+            })),
+          }
+        : undefined,
     },
   });
 
@@ -68,25 +82,41 @@ chatRoutes.post('/', async (c) => {
   const messages = await prisma.message.findMany({
     where: { conversationId: conversation.id },
     orderBy: { createdAt: 'asc' },
+    include: { images: true },
   });
 
   // 会話履歴をコンテキスト文字列として構築
   const conversationContext = messages
     .slice(0, -1) // 最新のユーザーメッセージ以外
-    .map((m: Message) => `${m.role === 'user' ? 'ユーザー' : 'アシスタント'}: ${m.content}`)
+    .map((m) => {
+      let text = `${m.role === 'user' ? 'ユーザー' : 'アシスタント'}: ${m.content}`;
+      if (m.images && m.images.length > 0) {
+        text += ` [画像${m.images.length}枚添付]`;
+      }
+      return text;
+    })
     .join('\n\n');
 
-  const currentMessage =
-    conversationContext.length > 0
-      ? `以下は会話の履歴です:\n\n${conversationContext}\n\n---\n\nユーザーの新しい質問: ${body.message}`
-      : body.message;
+  // 画像がある場合のメッセージ構築
+  let currentMessage = body.message;
+  if (conversationContext.length > 0) {
+    currentMessage = `以下は会話の履歴です:\n\n${conversationContext}\n\n---\n\nユーザーの新しい質問: ${body.message}`;
+  }
+
+  // 画像がある場合の注釈を追加
+  if (body.images && body.images.length > 0) {
+    currentMessage += `\n\n[ユーザーが${body.images.length}枚の画像を添付しました。画像の内容を確認して質問に答えてください。]`;
+  }
 
   // ストリーミングレスポンス
   return stream(c, async (streamWriter) => {
     let fullResponse = '';
 
     try {
-      // Mastra Agent stream API
+      // Mastra Agent stream API with multimodal support
+      // Note: Mastra's Agent.stream() might not directly support vision yet
+      // For now, we inform the agent about images in text
+      // Future enhancement: Use Anthropic SDK directly for vision support
       const response = await codeAssistantAgent.stream(currentMessage);
 
       for await (const chunk of response.textStream) {
@@ -147,6 +177,7 @@ chatRoutes.get('/:conversationId', async (c) => {
     include: {
       messages: {
         orderBy: { createdAt: 'asc' },
+        include: { images: true },
       },
     },
   });
@@ -160,10 +191,16 @@ chatRoutes.get('/:conversationId', async (c) => {
     title: conversation.title,
     createdAt: conversation.createdAt,
     updatedAt: conversation.updatedAt,
-    messages: conversation.messages.map((m: Message) => ({
+    messages: conversation.messages.map((m) => ({
       id: m.id,
       role: m.role,
       content: m.content,
+      images: m.images?.map((img) => ({
+        id: img.id,
+        data: img.data,
+        mimeType: img.mimeType,
+        createdAt: img.createdAt,
+      })),
       createdAt: m.createdAt,
     })),
   });

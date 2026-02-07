@@ -1,6 +1,7 @@
 'use client';
 
-import { Box, Avatar, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Avatar, Typography, ImageList, ImageListItem, Dialog } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ReactMarkdown from 'react-markdown';
@@ -22,6 +23,7 @@ function formatTime(dateString: string): string {
 
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user';
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   return (
     <Box
@@ -51,6 +53,50 @@ export function ChatMessage({ message }: ChatMessageProps) {
             {formatTime(message.createdAt)}
           </Typography>
         </Box>
+
+        {/* Images */}
+        {message.images && message.images.length > 0 && (
+          <Box sx={{ mb: 2 }}>
+            <ImageList cols={Math.min(message.images.length, 3)} gap={8}>
+              {message.images.map((image, index) => (
+                <ImageListItem key={image.id} sx={{ cursor: 'pointer' }}>
+                  <img
+                    src={`data:${image.mimeType};base64,${image.data}`}
+                    alt={`添付画像 ${index + 1}`}
+                    style={{
+                      width: '100%',
+                      maxHeight: '200px',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
+                    onClick={() => setExpandedImage(`data:${image.mimeType};base64,${image.data}`)}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Box>
+        )}
+
+        {/* Image Expansion Dialog */}
+        <Dialog
+          open={expandedImage !== null}
+          onClose={() => setExpandedImage(null)}
+          maxWidth="lg"
+          onClick={() => setExpandedImage(null)}
+        >
+          {expandedImage && (
+            <img
+              src={expandedImage}
+              alt="拡大画像"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
+          )}
+        </Dialog>
+
         <Box
           sx={{
             '& p': {

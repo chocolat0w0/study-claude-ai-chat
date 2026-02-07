@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { Message, ConversationDetail } from '@/types/chat';
+import type { Message, ConversationDetail, MessageImage } from '@/types/chat';
+
+interface ImageAttachment {
+  data: string; // Base64
+  mimeType: string;
+}
 
 interface UseChatOptions {
   conversationId?: string | null;
@@ -12,7 +17,7 @@ interface UseChatReturn {
   messages: Message[];
   isLoading: boolean;
   error: string | null;
-  sendMessage: (content: string) => Promise<void>;
+  sendMessage: (content: string, images?: ImageAttachment[]) => Promise<void>;
   loadConversation: (conversationId: string) => Promise<void>;
   clearMessages: () => void;
 }
@@ -45,7 +50,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
   }, []);
 
   const sendMessage = useCallback(
-    async (content: string) => {
+    async (content: string, images?: ImageAttachment[]) => {
       try {
         setIsLoading(true);
         setError(null);
@@ -55,6 +60,12 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
           id: `temp-${Date.now()}`,
           role: 'user',
           content,
+          images: images?.map((img, index) => ({
+            id: `temp-img-${Date.now()}-${index}`,
+            data: img.data,
+            mimeType: img.mimeType,
+            createdAt: new Date().toISOString(),
+          })),
           createdAt: new Date().toISOString(),
         };
         setMessages((prev) => [...prev, userMessage]);
@@ -78,6 +89,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
           body: JSON.stringify({
             message: content,
             conversationId: currentConversationId,
+            images: images,
           }),
         });
 
